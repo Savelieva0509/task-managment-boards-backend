@@ -27,17 +27,6 @@ async function addDashboard({ title }) {
   return newDashboard;
 }
 
-async function removeDashboard(id) {
-  const dashboards = await listDashboards();
-  const index = dashboards.findIndex((item) => item.id === id);
-  if (index === -1) {
-    return null;
-  }
-  const [result] = dashboards.splice(index, 1);
-  await fs.writeFile(dashboardsPath, JSON.stringify(dashboards, null, 2));
-  return result;
-}
-
 const updateDashboardById = async (id, data) => {
   const dashboards = await listDashboards();
   const index = dashboards.findIndex((item) => item.id === id);
@@ -49,10 +38,21 @@ const updateDashboardById = async (id, data) => {
   return dashboards[index];
 };
 
+async function removeDashboard(id) {
+  const dashboards = await listDashboards();
+  const index = dashboards.findIndex((item) => item.id === id);
+  if (index === -1) {
+    return null;
+  }
+  const [result] = dashboards.splice(index, 1);
+  await fs.writeFile(dashboardsPath, JSON.stringify(dashboards, null, 2));
+  return result;
+}
+
 module.exports = {
   listDashboards,
   getDashboardById,
   removeDashboard,
   addDashboard,
-  updateDashboardById
+  updateDashboardById,
 };
