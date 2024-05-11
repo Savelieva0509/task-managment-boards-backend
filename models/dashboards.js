@@ -1,11 +1,6 @@
 const fs = require("fs/promises");
 const path = require("path");
-import("nanoid")
-  .then(({ nanoid }) => {
-  })
-  .catch((err) => {
-    console.error("Ошибка при импорте nanoid:", err);
-  });
+const { v4: uuidv4 } = require("uuid");
 
 const dashboardsPath = path.join(__dirname, "./dashboards.json");
 
@@ -20,16 +15,11 @@ async function getDashboardById(id) {
   return result || null;
 }
 
-async function addDashboard({ name }) {
+async function addDashboard({ title }) {
   const dashboards = await listDashboards();
   const newDashboard = {
-    id: nanoid(),
-    name,
-    columns: {
-      ToDo: [],
-      InProgress: [],
-      Done: [],
-    },
+    id: uuidv4(),
+    title,
   };
 
   dashboards.push(newDashboard);
@@ -38,9 +28,8 @@ async function addDashboard({ name }) {
 }
 
 async function removeDashboard(id) {
-  const dashboardId = String(id);
   const dashboards = await listDashboards();
-  const index = dashboards.findIndex((item) => item.id === dashboardId);
+  const index = dashboards.findIndex((item) => item.id === id);
   if (index === -1) {
     return null;
   }
@@ -49,9 +38,21 @@ async function removeDashboard(id) {
   return result;
 }
 
+const updateDashboardById = async (id, data) => {
+  const dashboards = await listDashboards();
+  const index = dashboards.findIndex((item) => item.id === id);
+  if (index === -1) {
+    return null;
+  }
+  dashboards[index] = { id, ...data };
+  await fs.writeFile(dashboardsPath, JSON.stringify(dashboards, null, 2));
+  return dashboards[index];
+};
+
 module.exports = {
   listDashboards,
   getDashboardById,
   removeDashboard,
   addDashboard,
+  updateDashboardById
 };
