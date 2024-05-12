@@ -2,8 +2,6 @@ const dashboards = require("../models/dashboards");
 
 const { HttpError, ControllerWrapper } = require("../helpers");
 
-
-
 const listDashboards = async (req, res) => {
   const result = await dashboards.listDashboards();
   res.json(result);
