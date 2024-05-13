@@ -15,7 +15,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/boards", boardsRouter);
-app.use("/api/boards/:boardId/tasks", tasksRouter);
+app.use("/api/boards", tasksRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });

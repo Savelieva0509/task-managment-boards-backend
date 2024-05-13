@@ -2,6 +2,8 @@ const Joi = require("joi");
 const { Schema, model } = require("mongoose");
 const { handleMongooseError } = require("../helpers");
 
+const validStatusValues = ["to do", "in progress", "done"];
+
 const taskSchema = new Schema(
   {
     title: {
@@ -12,11 +14,12 @@ const taskSchema = new Schema(
       type: String,
       required: true,
     },
-    boardId: {
+    status: {
       type: String,
       required: true,
+      enum: validStatusValues,
     },
-    status: {
+    boardId: {
       type: String,
       required: true,
     },
@@ -25,7 +28,7 @@ const taskSchema = new Schema(
 );
 
 const updStatusSchema = Joi.object({
-  favorite: Joi.boolean().required(),
+  status: Joi.string().valid(...validStatusValues).required(),
 });
 
 taskSchema.post("save", handleMongooseError);
@@ -33,8 +36,8 @@ taskSchema.post("save", handleMongooseError);
 const addSchema = Joi.object({
   title: Joi.string().required(),
   text: Joi.string().required(),
-  boardId: Joi.string().required(),
   status: Joi.string().required(),
+  boardId: Joi.string().required(),
 });
 
 const schemas = {
@@ -43,4 +46,5 @@ const schemas = {
 };
 
 const Task = model("task", taskSchema);
+
 module.exports = { Task, schemas };

@@ -4,12 +4,14 @@ const { HttpError, ControllerWrapper } = require("../helpers");
 
 const listBoards = async (req, res) => {
   const result = await Board.find();
+
   res.json(result);
 };
 
 const getBoardById = async (req, res) => {
   const { boardId } = req.params;
   const result = await Board.findById(boardId);
+
   if (!result) {
     throw HttpError(404, "Not found");
   }

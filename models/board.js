@@ -21,5 +21,7 @@ const addSchema = Joi.object({
 const schemas = {
   addSchema,
 };
+
 const Board = model("board", boardSchema);
+
 module.exports = { Board, schemas };
