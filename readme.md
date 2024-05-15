@@ -27,8 +27,8 @@ The server will start running on port 3001 by default. You can change the port b
 
 ### API Endpoints
 
-BASE_URL: https:// https://task-managment-boards-backend.onrender.com
-BASE LINK: mongodb+srv://savelieva0509:W5SEVhhJ3axtppS9@cluster0.rhhmecl.mongodb.net/boards_reader?retryWrites=true&w=majority&appName=Cluster0
+- BASE_URL: https:// https://task-managment-boards-backend.onrender.com
+- BASE LINK: mongodb+srv://savelieva0509:W5SEVhhJ3axtppS9@cluster0.rhhmecl.mongodb.net/boards_reader?retryWrites=true&w=majority&appName=Cluster0
 
 The following API endpoints are available:
 
